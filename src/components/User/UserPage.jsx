@@ -28,9 +28,7 @@ export function UserPage({usuario}) {
             localStorage.setItem(BIO, JSON.stringify(bios))
     }, [bios])
 
-    console.log(usuario)
     if(usuario){
-        console.log("???")
         if(!(usuario.username in bios)){
             return(<NewBio currentBio={""} submitBio={updateBio}/>)
         }

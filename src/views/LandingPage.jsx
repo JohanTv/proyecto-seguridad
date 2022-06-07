@@ -9,7 +9,6 @@ const USER = "retoLuiseUsuario"
 export function LandingPage() {
     const [usuarios, setUsuarios] = useState({})
     const [user, setUser] = useState()
-    console.log(usuarios)
 
     useEffect(() => {
         const storedUsuarios = JSON.parse(localStorage.getItem(USERS))
