@@ -11,9 +11,35 @@ export async function validate(passwordInp, hash, salt){
     return auth === hash;
 }
 
+export async function encryptPassword(masterPassword, salt, passwordInp){
+    const saltIv = window.crypto.getRandomValues(new Uint8Array(16));
+    const vaultKey = await getDeriveKey(masterPassword, str2arr(salt));
+    const enc = new TextEncoder();
+
+    const cipherText = await window.crypto.subtle.encrypt(
+        { name: "AES-CBC", iv: saltIv },
+        vaultKey,
+        enc.encode(passwordInp)
+    );
+    const buffer = new Uint8Array(cipherText);
+    return {cipherText: arr2str(buffer), salt: arr2str(saltIv)};
+}
+
+export async function decryptPassword(masterPassword, salt, password, saltIv){
+    const vaultKey = await getDeriveKey(masterPassword, str2arr(salt));
+    const cipherText = str2arr(password);
+    const decrypted = await window.crypto.subtle.decrypt(
+        { name: "AES-CBC", iv: str2arr(saltIv) },
+        vaultKey,
+        cipherText
+    );
+
+    let dec = new TextDecoder();
+    return dec.decode(decrypted);
+}
+
 async function getPasswordHashStr(masterPassword, userSalt){
-    let keyMaterial = await getKeyMaterial(masterPassword);
-    let key = await getDeriveKey(keyMaterial, userSalt);
+    let key = await getDeriveKey(masterPassword, userSalt);
     const exported = await window.crypto.subtle.exportKey(
         "raw",
         key
@@ -22,7 +48,7 @@ async function getPasswordHashStr(masterPassword, userSalt){
 }
 
 function getKeyMaterial(password) {
-    let enc = new TextEncoder();
+    const enc = new TextEncoder();
     return window.crypto.subtle.importKey(
       "raw", 
       enc.encode(password), 
@@ -32,7 +58,8 @@ function getKeyMaterial(password) {
     );
 }
 
-function getDeriveKey(keyMaterial, userSalt){
+async function getDeriveKey(password, userSalt){
+    const keyMaterial = await getKeyMaterial(password);
     return window.crypto.subtle.deriveKey(
         {
           "name": "PBKDF2",
@@ -61,7 +88,7 @@ function str2arr(str) {
     const bufView = new Uint8Array(buf);
 
     for (let i = 0; i < str.length; i++)
-      bufView[i] = str.charCodeAt(i);
+        bufView[i] = str.charCodeAt(i);
 
     return bufView;
 }
