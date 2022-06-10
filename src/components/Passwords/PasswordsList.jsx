@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { validate, encryptPassword } from '../../lib/cryptography'
 import { NewPassword } from './NewPassword'
 import { PasswordInfo } from './PasswordInfo'
 
 const PASSWORDS = "PASSLIST"
+const CURRENTUSER = "retoLuiseUsuario"
 
 export function PasswordsList() {
     const [passwords, setPasswords] = useState([])
-    
+    const [user, setUser] = useState([])
     useEffect(() => {
         const storedPasswords = JSON.parse(localStorage.getItem(PASSWORDS))
         if(storedPasswords){
             setPasswords(storedPasswords)
+        }
+        const currentUser = JSON.parse(localStorage.getItem(CURRENTUSER))
+        if(currentUser){
+            setUser(currentUser)
         }
     }, [])
 
@@ -20,8 +26,21 @@ export function PasswordsList() {
     }, [passwords])
 
 
-    const addPassword = (pass) => { // Acá hacer la encriptación correcta y agregar el valor ya hasheado y todo
-        setPasswords([...passwords, pass])
+    const addPassword = (pass) => {
+        const masterPassword = prompt('Enter Master Password')
+        validate(masterPassword, user.password, user.salt)
+        .then((result) => {
+            if(result){
+                encryptPassword(masterPassword, user.salt, pass.password)
+                .then((encrypted) => {
+                    pass.password = encrypted.cipherText
+                    pass.salt = encrypted.salt
+                    setPasswords([...passwords, pass])
+                })
+            }else{
+                alert("Wrong password!")
+            }
+        })
     }
 
     return (
