@@ -1,3 +1,12 @@
+@import "./styles/login.css";
+@import "./styles/header.css";
+@import "./styles/passIndex.css";
+
+body{
+  background-color: #D3D3DA;
+  padding: 20px;
+}
+
 .App {
   text-align: center;
 }

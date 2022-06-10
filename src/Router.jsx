@@ -11,12 +11,12 @@ export function Router() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<NavBar/>}>
+                {/* <Route path="/" element={<NavBar/>}> */}
                     <Route index element={<LandingPage/>}/>
                     <Route path="passwords" element={<PasswordsList />}/>
                     <Route path="passwords/new" element={ <NewPassword/> }/>
                     <Route path="/user/:username" element={<UserPage/>}/>
-                </Route>
+                {/* </Route> */}
                 <Route path="*" element={<Error errorNo={404}/>}/>
             </Routes>
         </BrowserRouter>

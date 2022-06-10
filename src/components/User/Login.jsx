@@ -19,10 +19,10 @@ export function Login({verification}) {
     }, [loginData, verification])
 
     return (
-        <div>
-            <input type="text" onChange={(e) => {user=e.currentTarget.value}} placeholder="nombre de usuario"/>
-            <input type="password" onChange={(e) => {pass=e.currentTarget.value}} placeholder="contraseña"/>
-            <button onClick={sendData}>Ingresar</button>
+        <div className="login-box">
+            <input className="input-box" type="text" onChange={(e) => {user=e.currentTarget.value}} placeholder="nombre de usuario"/>
+            <input className="input-box" type="password" onChange={(e) => {pass=e.currentTarget.value}} placeholder="contraseña"/>
+            <button onClick={sendData}>Ingresar </button>
         </div>
     )
 }

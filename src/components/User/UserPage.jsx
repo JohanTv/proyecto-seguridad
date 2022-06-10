@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bio } from './Bio/Bio'
 import { NewBio } from './Bio/NewBio'
+import { NavLink } from 'react-router-dom'
 
 const BIO = "retoLuiseBios"
 
@@ -27,17 +28,26 @@ export function UserPage({usuario}) {
         if(bios)
             localStorage.setItem(BIO, JSON.stringify(bios))
     }, [bios])
-
+    let content;
     if(usuario){
         if(!(usuario.username in bios)){
-            return(<NewBio currentBio={""} submitBio={updateBio}/>)
+            // return(
+            // <Fragment>
+                content = <NewBio currentBio={""} submitBio={updateBio}/>
+                {/* <NavLink to="/passwords" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">To passwords</NavLink> */}
+            // </Fragment>
+            // )
         }
-        const bio = bios[usuario.username]
+        else{
+            const bio = bios[usuario.username]
+            content = (<Fragment><h3>Información de {userNameParams}</h3>
+                <Bio bio={bio}/>
+                <NewBio currentBio={bio} submitBio={updateBio}/></Fragment>)
+        }
         return (
             <Fragment>
-                <h1>Infrmación de {userNameParams}</h1>
-                <Bio bio={bio}/>
-                <NewBio currentBio={bio} submitBio={updateBio}/>
+                {content}
+                <NavLink to="/passwords" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">To passwords</NavLink>
             </Fragment>
         )
     }

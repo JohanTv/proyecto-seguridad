@@ -24,12 +24,17 @@ export function PasswordInfo({password}) {
 
     return (
         <Fragment>
-        <p>{password.passName}</p>
-        <p>{password.userName}</p>
-        <div ref={passDiv}>
-        </div>
-        <button ref={showButton} onClick={showPass}>Show password</button>
-        ---------------------------------------------------------------
+            <div className="singlePass">
+                <div className="passName">
+                    <div>{password.passName}</div>
+                </div>
+                <div className="passInfo">
+                    <div>{password.userName}</div>
+                    <div ref={passDiv}>
+                    </div>
+                <button ref={showButton} onClick={showPass}>Show password</button>
+                </div>
+            </div>
         </Fragment>
     )
 }
