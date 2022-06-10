@@ -9,3 +9,8 @@
     border-style: solid;
     border-radius: 7px;
 }
+
+.passName {
+    font-size: 30px;
+    font-weight: bold;
+}
