@@ -4,7 +4,7 @@ import { NewPassword } from './NewPassword'
 import { PasswordInfo } from './PasswordInfo'
 
 const PASSWORDS = "PASSLIST"
-const CURRENTUSER = "retoLuiseUsuario"
+const CURRENTUSER = "USUARIOACTUAL"
 
 export function PasswordsList() {
     const [passwords, setPasswords] = useState([])
@@ -21,7 +21,7 @@ export function PasswordsList() {
     }, [])
 
     useEffect(() => {
-        if(passwords)
+        if(passwords.length > 0)
             localStorage.setItem(PASSWORDS, JSON.stringify(passwords))
     }, [passwords])
 

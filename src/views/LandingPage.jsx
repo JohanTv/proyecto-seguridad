@@ -3,8 +3,8 @@ import { Header } from '../components/Header'
 import { UserPage } from '../components/User/UserPage'
 import { Footer } from '../components/Footer'
 
-const USERS = "retoLuiseUsuarios"
-const USER = "retoLuiseUsuario"
+const USERS = "USUARIOS"
+const USER = "USUARIOACTUAL"
 
 export function LandingPage() {
     const [usuarios, setUsuarios] = useState({})
