@@ -1,5 +1,10 @@
-.header{
+.welcome{
     font-size: 30px;
     margin: 10px 50px;
     font-weight: bold;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
 }

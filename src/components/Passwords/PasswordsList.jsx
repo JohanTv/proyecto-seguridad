@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { validate, encryptPassword } from '../../lib/cryptography'
 import { NewPassword } from './NewPassword'
 import { PasswordInfo } from './PasswordInfo'
+import {NavLink} from 'react-router-dom'
 
 const PASSWORDS = "PASSLIST"
 const CURRENTUSER = "USUARIOACTUAL"
@@ -62,6 +63,7 @@ export function PasswordsList() {
     return (
         <div>
             <h1>Passwords</h1>
+            <NavLink to="/" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">Home</NavLink>
             <NewPassword addPass={addPassword}/>
             { passwords  && passwords[user.username] && passwords[user.username].map((pass, index) => (
                 <PasswordInfo key={index} password={pass}/>

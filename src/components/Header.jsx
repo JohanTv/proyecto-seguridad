@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import { Login } from './User/Login'
 import { User } from './User/User'
 import { NewUser } from './User/NewUser'
@@ -37,9 +37,22 @@ export function Header({usuario, setUser, usuarios, setUsuarios}) {
 
     if (usuario){
         if(usuario.loginCount === 1){
-            return (<NewUser username={usuario.username}/>)
+            return (
+            <Fragment>
+                <div className="header">
+                    <NewUser username={usuario.username}/>
+                </div>
+            </Fragment>
+            
+            )
         }
-        return (<User username={usuario.username}/>)
+        return (
+        <Fragment>
+            <div className="header">
+                <User username={usuario.username}/>
+            </div>
+        </Fragment>
+        )
     }
     else{
         return (<Login verification = {login}/>)

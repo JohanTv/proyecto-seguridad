@@ -2,7 +2,7 @@ import React from 'react'
 
 export function User({username}) {
     return (
-        <div className="header">
+        <div className="welcome">
             Welcome back {username}!
         </div>
     )

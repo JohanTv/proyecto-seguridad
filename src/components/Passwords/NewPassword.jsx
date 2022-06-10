@@ -11,6 +11,9 @@ export function NewPassword({addPass}) {
                         }
         console.log(newPass)
         addPass(newPass)
+        passName.current.value = ""
+        userName.current.value = ""
+        password.current.value = ""
     };
 
     return (
@@ -18,7 +21,7 @@ export function NewPassword({addPass}) {
             <input ref={passName} type="text" placeholder="Nombre de contraseña"/>
             <input ref={userName} type="text" placeholder="Nombre de usuario/identificador"/>
             <input ref={password} type="password" placeholder="Contraseña"/>
-            <button type="submit" onClick={buildPass}>Subir bio</button>
+            <button type="submit" onClick={buildPass}>Ingresar registro</button>
         </div>
     )
 }
