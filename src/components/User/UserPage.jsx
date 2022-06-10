@@ -4,7 +4,7 @@ import { Bio } from './Bio/Bio'
 import { NewBio } from './Bio/NewBio'
 import { NavLink } from 'react-router-dom'
 
-const BIO = "retoLuiseBios"
+const BIO = "BIOS"
 
 export function UserPage({usuario}) {
     const [bios, setBios] = useState({})
@@ -31,12 +31,7 @@ export function UserPage({usuario}) {
     let content;
     if(usuario){
         if(!(usuario.username in bios)){
-            // return(
-            // <Fragment>
-                content = <NewBio currentBio={""} submitBio={updateBio}/>
-                {/* <NavLink to="/passwords" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">To passwords</NavLink> */}
-            // </Fragment>
-            // )
+            content = <NewBio currentBio={""} submitBio={updateBio}/>
         }
         else{
             const bio = bios[usuario.username]

@@ -1,7 +1,7 @@
 import React, {useRef, Fragment, useState, useEffect} from 'react'
 import { validate, decryptPassword } from '../../lib/cryptography'
 
-const CURRENTUSER = "retoLuiseUsuario"
+const CURRENTUSER = "USUARIOACTUAL"
 
 export function PasswordInfo({password}) {
     const passDiv = useRef(0)

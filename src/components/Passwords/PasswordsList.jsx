@@ -7,8 +7,8 @@ const PASSWORDS = "PASSLIST"
 const CURRENTUSER = "USUARIOACTUAL"
 
 export function PasswordsList() {
-    const [passwords, setPasswords] = useState([])
-    const [user, setUser] = useState([])
+    const [passwords, setPasswords] = useState()
+    const [user, setUser] = useState()
     useEffect(() => {
         const storedPasswords = JSON.parse(localStorage.getItem(PASSWORDS))
         if(storedPasswords){
@@ -21,12 +21,19 @@ export function PasswordsList() {
     }, [])
 
     useEffect(() => {
-        if(passwords.length > 0)
+        if(passwords)
             localStorage.setItem(PASSWORDS, JSON.stringify(passwords))
-    }, [passwords])
+    }, [passwords, user])
 
+
+/* {
+    user: [{}, {}]
+
+    }
+*/ 
 
     const addPassword = (pass) => {
+        
         const masterPassword = prompt('Enter Master Password')
         validate(masterPassword, user.password, user.salt)
         .then((result) => {
@@ -35,7 +42,16 @@ export function PasswordsList() {
                 .then((encrypted) => {
                     pass.password = encrypted.cipherText
                     pass.salt = encrypted.salt
-                    setPasswords([...passwords, pass])
+                    const newPasswords = {...passwords}
+                    let newPassList = []
+                    if(passwords && (user.username in passwords)){
+                        newPassList = [...passwords[user.username], pass]
+                    }
+                    else{
+                        newPassList = [pass]
+                    }
+                    newPasswords[user.username] = newPassList
+                    setPasswords(newPasswords)
                 })
             }else{
                 alert("Wrong password!")
@@ -47,7 +63,7 @@ export function PasswordsList() {
         <div>
             <h1>Passwords</h1>
             <NewPassword addPass={addPassword}/>
-            { passwords && passwords.map((pass, index) => (
+            { passwords  && passwords[user.username] && passwords[user.username].map((pass, index) => (
                 <PasswordInfo key={index} password={pass}/>
             ))}
         </div>
