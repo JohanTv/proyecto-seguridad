@@ -43,6 +43,7 @@ export function UserPage({usuario}) {
             <Fragment>
                 {content}
                 <NavLink to="/passwords" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">To passwords</NavLink>
+                <NavLink to="/passwords-report" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">Get passwords report</NavLink>
             </Fragment>
         )
     }

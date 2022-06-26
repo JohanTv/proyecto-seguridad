@@ -39,6 +39,7 @@ export function PasswordsList() {
         validate(masterPassword, user.password, user.salt)
         .then((result) => {
             if(result){
+                // Johan: Encriptamos también el nivel de seguridad? Como para que no sepan abiertamente el nivel de seguridad de la contraseña
                 encryptPassword(masterPassword, user.salt, pass.password)
                 .then((encrypted) => {
                     pass.password = encrypted.cipherText

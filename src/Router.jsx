@@ -6,6 +6,7 @@ import {Error} from "./views/Error"
 import {LandingPage} from "./views/LandingPage"
 import {UserPage} from "./components/User/UserPage"
 import { NavBar } from './components/NavBar'
+import { PasswordsReport } from './components/Passwords/PasswordsReport'
 
 export function Router() {
     return (
@@ -14,6 +15,7 @@ export function Router() {
                 {/* <Route path="/" element={<NavBar/>}> */}
                     <Route index element={<LandingPage/>}/>
                     <Route path="passwords" element={<PasswordsList />}/>
+                    <Route path="passwords-report" element={<PasswordsReport />}/>
                     <Route path="passwords/new" element={ <NewPassword/> }/>
                     <Route path="/user/:username" element={<UserPage/>}/>
                 {/* </Route> */}

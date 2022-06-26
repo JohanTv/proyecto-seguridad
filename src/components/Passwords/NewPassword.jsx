@@ -1,5 +1,7 @@
 import React, { useRef } from 'react'
 
+const getSafeScore = () => {};
+
 export function NewPassword({addPass}) {
     const passName = useRef(0);
     const userName = useRef(0)
@@ -7,7 +9,8 @@ export function NewPassword({addPass}) {
     const buildPass = () => {
         const newPass = {passName: passName.current.value,
                          userName: userName.current.value,
-                         password: password.current.value
+                         password: password.current.value,
+                         safeScore: getSafeScore() // TODO: Johan implementar este metodo
                         }
         console.log(newPass)
         addPass(newPass)

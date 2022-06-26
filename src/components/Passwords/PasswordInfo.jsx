@@ -22,7 +22,7 @@ export function PasswordInfo({password}) {
                 if(result){
                     decryptPassword(masterPassword, user.salt, password.password, password.salt)
                     .then((decrypted) => {
-                        passDiv.current.innerHTML += `<p>${decrypted}</p`
+                        passDiv.current.innerHTML += `${decrypted}`
                         showButton.current.innerHTML = 'Hide password'
                     })
                 }else{
@@ -31,7 +31,7 @@ export function PasswordInfo({password}) {
             })
         }
         else{
-            passDiv.current.innerHTML = ''
+            passDiv.current.innerHTML = 'Password: '
             showButton.current.innerHTML = 'Show password'
         }
         setShow(!show)
@@ -41,13 +41,12 @@ export function PasswordInfo({password}) {
         <Fragment>
             <div className="singlePass">
                 <div className="passName">
-                    <div>{password.passName}</div>
+                    {password.passName}
                 </div>
                 <div className="passInfo">
-                    <div>{password.userName}</div>
-                    <div ref={passDiv}>
-                    </div>
-                <button ref={showButton} onClick={showPass}>Show password</button>
+                    <div>Usuario de ingreso: {password.userName}</div>
+                    <div ref={passDiv} className="passContainer">Password: </div>
+                    <button ref={showButton} onClick={showPass}>Show password</button>
                 </div>
             </div>
         </Fragment>
