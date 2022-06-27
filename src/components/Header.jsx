@@ -1,11 +1,23 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useContext} from 'react'
 import { Login } from './User/Login'
 import { User } from './User/User'
 import { NewUser } from './User/NewUser'
 import {createAuth, validate} from '../lib/cryptography'
+import { currentUser } from '../contexts/currentUser'
+import { useEffect } from 'react'
 
 export function Header({usuario, setUser, usuarios, setUsuarios}) {
-
+    const curreUser = useContext(currentUser)
+    useEffect(() => {
+        console.log("it is happening", usuario)
+        if (usuario){
+            console.log("!")
+            console.log(usuario)
+            curreUser.setUser(usuario)
+            console.log("?")
+            console.log(curreUser.user)
+        }
+    }, [usuario])
     const login = (loginData) => {
         const usernameInp = loginData.username
         const passwordInp = loginData.password
@@ -36,10 +48,12 @@ export function Header({usuario, setUser, usuarios, setUsuarios}) {
     }
 
     if (usuario){
+        console.log("in if", curreUser.user)
         if(usuario.loginCount === 1){
             return (
             <Fragment>
                 <div className="header">
+                    <input type="text" defaultValue={curreUser.user && curreUser.user.username}/>
                     <NewUser username={usuario.username}/>
                 </div>
             </Fragment>
