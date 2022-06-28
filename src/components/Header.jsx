@@ -1,23 +1,13 @@
-import React, {Fragment, useContext} from 'react'
+import React, {Fragment} from 'react'
 import { Login } from './User/Login'
 import { User } from './User/User'
 import { NewUser } from './User/NewUser'
 import {createAuth, validate} from '../lib/cryptography'
-import { currentUser } from '../contexts/currentUser'
-import { useEffect } from 'react'
+import { Logout } from './User/Logout'
+import { USER } from '../env/localStorageVars'
 
 export function Header({usuario, setUser, usuarios, setUsuarios}) {
-    const curreUser = useContext(currentUser)
-    useEffect(() => {
-        console.log("it is happening", usuario)
-        if (usuario){
-            console.log("!")
-            console.log(usuario)
-            curreUser.setUser(usuario)
-            console.log("?")
-            console.log(curreUser.user)
-        }
-    }, [usuario])
+    
     const login = (loginData) => {
         const usernameInp = loginData.username
         const passwordInp = loginData.password
@@ -47,23 +37,23 @@ export function Header({usuario, setUser, usuarios, setUsuarios}) {
         }
     }
 
+    const logout = () => {
+        setUser(null)
+        localStorage.removeItem(USER)
+    }
+
     if (usuario){
-        console.log("in if", curreUser.user)
-        if(usuario.loginCount === 1){
-            return (
-            <Fragment>
-                <div className="header">
-                    <input type="text" defaultValue={curreUser.user && curreUser.user.username}/>
-                    <NewUser username={usuario.username}/>
-                </div>
-            </Fragment>
-            
-            )
-        }
+        let content;
+        if(usuario.loginCount === 1)
+            content = <NewUser username={usuario.username}/>
+        else
+            content = <User username={usuario.username}/>
         return (
         <Fragment>
             <div className="header">
-                <User username={usuario.username}/>
+                {content}
+                {/* <Link to="/">To root</Link> */}
+                <Logout logout={logout}></Logout>
             </div>
         </Fragment>
         )

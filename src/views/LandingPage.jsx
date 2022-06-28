@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { currentUser } from '../contexts/currentUser'
+import { currentUser } from '../contexts/UsersContext'
+
 export function LandingPage() {
     const currUser = useContext(currentUser)
     console.log(currUser.user)
