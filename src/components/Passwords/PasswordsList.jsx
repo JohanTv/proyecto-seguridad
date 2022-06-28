@@ -54,9 +54,9 @@ export function PasswordsList() {
         return null
     }
     else{
-        // if(!user){
-        // return <Navigate to='/app' />
-        // }
+        if(!user){
+        return <Navigate to='/app' />
+        }
         return (
             <div>
                 <h1>Passwords</h1>

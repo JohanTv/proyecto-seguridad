@@ -1,0 +1,28 @@
+.SecurityGrades{
+    display: flex;
+    justify-content: space-around;
+}
+
+.securityContainer{
+    width: 25%;
+    border-radius: 30px;
+    height: 60vh;
+    padding:10px;
+}
+
+.securityContainer .title{
+    font-size: 30px;
+}
+
+#Alto{
+    background-color: rgb(43, 165, 43);
+}
+
+
+#Medio{
+    background-color: yellowgreen;
+}
+
+#Bajo{
+    background-color: red;
+}

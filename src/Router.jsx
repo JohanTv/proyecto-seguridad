@@ -12,7 +12,7 @@ import { USER, USERS } from './env/localStorageVars'
 
 
 export function Router() {
-    const [usuarios, setUsuarios] = useState({})
+    const [usuarios, setUsuarios] = useState(null)
     const [user, setUser] = useState(null);
 
     useEffect(() => {
