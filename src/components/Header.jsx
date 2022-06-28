@@ -3,9 +3,11 @@ import { Login } from './User/Login'
 import { User } from './User/User'
 import { NewUser } from './User/NewUser'
 import {createAuth, validate} from '../lib/cryptography'
+import { Logout } from './User/Logout'
+import { USER } from '../env/localStorageVars'
 
 export function Header({usuario, setUser, usuarios, setUsuarios}) {
-
+    
     const login = (loginData) => {
         const usernameInp = loginData.username
         const passwordInp = loginData.password
@@ -35,21 +37,23 @@ export function Header({usuario, setUser, usuarios, setUsuarios}) {
         }
     }
 
+    const logout = () => {
+        setUser(null)
+        localStorage.removeItem(USER)
+    }
+
     if (usuario){
-        if(usuario.loginCount === 1){
-            return (
-            <Fragment>
-                <div className="header">
-                    <NewUser username={usuario.username}/>
-                </div>
-            </Fragment>
-            
-            )
-        }
+        let content;
+        if(usuario.loginCount === 1)
+            content = <NewUser username={usuario.username}/>
+        else
+            content = <User username={usuario.username}/>
         return (
         <Fragment>
             <div className="header">
-                <User username={usuario.username}/>
+                {content}
+                {/* <Link to="/">To root</Link> */}
+                <Logout logout={logout}></Logout>
             </div>
         </Fragment>
         )

@@ -1,6 +1,7 @@
 @import "./styles/login.css";
 @import "./styles/header.css";
 @import "./styles/passIndex.css";
+@import "./styles/securityReport.css";
 
 body{
   background-color: #D3D3DA;
