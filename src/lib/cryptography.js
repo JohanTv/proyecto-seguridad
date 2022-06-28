@@ -1,3 +1,6 @@
+const strongPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
+const mediumPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
+
 export async function createAuth(masterPassword){
     const userSalt = crypto.getRandomValues(new Uint8Array(16));
     const vaultKey = await getPasswordHashStr(masterPassword, userSalt);
@@ -53,11 +56,29 @@ export async function decryptPassword(masterPassword, salt, password, saltIv){
 }
 
 export function getSafeScore(score, levels){
-    const strongPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
-    const mediumPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
     if(strongPassword.test(score)) return levels[0];
     if(mediumPassword.test(score)) return levels[1];
     return levels[2];
+}
+
+export function generateRandomPassword(length){
+    let password = "";
+    do{
+        password = randomString(length);
+    }while(!strongPassword.test(password));
+
+    return password;
+}
+
+function randomString(length){
+    const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^*()_+~`|}{[]\:;?,./-=";
+    let result = "";
+    const values = new Uint16Array(length);
+    window.crypto.getRandomValues(values);
+    for(let i = 0; i < length; i++)
+        result += charset[values[i] % charset.length];
+
+    return result;
 }
 
 async function getPasswordHashStr(masterPassword, userSalt){
