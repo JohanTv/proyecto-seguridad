@@ -1,7 +1,6 @@
 import React, {useRef, Fragment, useState, useEffect} from 'react'
 import { validate, decryptPassword } from '../../lib/cryptography'
-
-const CURRENTUSER = "USUARIOACTUAL"
+import { USER } from '../../env/localStorageVars'
 
 export function PasswordInfo({password}) {
     const passDiv = useRef(0)
@@ -9,7 +8,7 @@ export function PasswordInfo({password}) {
     const [show, setShow] = useState(true)
     const [user, setUser] = useState([])
     useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem(CURRENTUSER))
+        const currentUser = JSON.parse(localStorage.getItem(USER))
         if(currentUser){
             setUser(currentUser)
         }
@@ -20,6 +19,7 @@ export function PasswordInfo({password}) {
             validate(masterPassword, user.password, user.salt)
             .then((result) => {
                 if(result){
+                    console.log(masterPassword, user.salt, password.password, password.salt)
                     decryptPassword(masterPassword, user.salt, password.password, password.salt)
                     .then((decrypted) => {
                         passDiv.current.innerHTML += `${decrypted}`
