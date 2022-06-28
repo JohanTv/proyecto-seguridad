@@ -25,6 +25,20 @@ export async function encryptPassword(masterPassword, salt, passwordInp){
     return {cipherText: arr2str(buffer), salt: arr2str(saltIv)};
 }
 
+export async function encryptScore(masterPassword, salt, score){
+    salt = str2arr(salt)
+    const vaultKey = await getDeriveKey(masterPassword, salt);
+    const enc = new TextEncoder();
+
+    const cipherText = await window.crypto.subtle.encrypt(
+        { name: "AES-CBC", iv: salt },
+        vaultKey,
+        enc.encode(score)
+    );
+    const buffer = new Uint8Array(cipherText);
+    return arr2str(buffer);
+}
+
 export async function decryptPassword(masterPassword, salt, password, saltIv){
     const vaultKey = await getDeriveKey(masterPassword, str2arr(salt));
     const cipherText = str2arr(password);
@@ -36,6 +50,14 @@ export async function decryptPassword(masterPassword, salt, password, saltIv){
 
     let dec = new TextDecoder();
     return dec.decode(decrypted);
+}
+
+export function getSafeScore(score, levels){
+    const strongPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
+    const mediumPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
+    if(strongPassword.test(score)) return levels[0];
+    if(mediumPassword.test(score)) return levels[1];
+    return levels[2];
 }
 
 async function getPasswordHashStr(masterPassword, userSalt){

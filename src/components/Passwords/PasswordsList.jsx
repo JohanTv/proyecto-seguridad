@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { validate, encryptPassword } from '../../lib/cryptography'
+import { validate, encryptPassword, encryptScore } from '../../lib/cryptography'
 import { NewPassword } from './NewPassword'
 import { PasswordInfo } from './PasswordInfo'
 import {NavLink} from 'react-router-dom'
@@ -34,26 +34,28 @@ export function PasswordsList() {
 */ 
 
     const addPassword = (pass) => {
-        
         const masterPassword = prompt('Enter Master Password')
         validate(masterPassword, user.password, user.salt)
         .then((result) => {
             if(result){
-                // Johan: Encriptamos también el nivel de seguridad? Como para que no sepan abiertamente el nivel de seguridad de la contraseña
                 encryptPassword(masterPassword, user.salt, pass.password)
                 .then((encrypted) => {
                     pass.password = encrypted.cipherText
                     pass.salt = encrypted.salt
-                    const newPasswords = {...passwords}
-                    let newPassList = []
-                    if(passwords && (user.username in passwords)){
-                        newPassList = [...passwords[user.username], pass]
-                    }
-                    else{
-                        newPassList = [pass]
-                    }
-                    newPasswords[user.username] = newPassList
-                    setPasswords(newPasswords)
+                    encryptScore(masterPassword, user.salt, pass.safeScore)
+                    .then((scoreEncrypted) => {
+                        pass.safeScore = scoreEncrypted
+                        const newPasswords = {...passwords}
+                        let newPassList = []
+                        if(passwords && (user.username in passwords)){
+                            newPassList = [...passwords[user.username], pass]
+                        }
+                        else{
+                            newPassList = [pass]
+                        }
+                        newPasswords[user.username] = newPassList
+                        setPasswords(newPasswords)
+                    })
                 })
             }else{
                 alert("Wrong password!")

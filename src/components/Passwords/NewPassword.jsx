@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
+import { getSafeScore } from '../../lib/cryptography'
 
-const getSafeScore = () => {};
+const levels = ["Alto","Medio","Bajo"]
 
 export function NewPassword({addPass}) {
     const passName = useRef(0);
@@ -10,9 +11,8 @@ export function NewPassword({addPass}) {
         const newPass = {passName: passName.current.value,
                          userName: userName.current.value,
                          password: password.current.value,
-                         safeScore: getSafeScore() // TODO: Johan implementar este metodo
+                         safeScore: getSafeScore(password.current.value, levels)
                         }
-        console.log(newPass)
         addPass(newPass)
         passName.current.value = ""
         userName.current.value = ""
