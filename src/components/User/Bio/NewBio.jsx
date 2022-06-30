@@ -5,7 +5,6 @@ export function NewBio({currentBio, submitBio}) {
     var prevText = (currentBio !=="") ? "Escribe algo nuevo sobre ti" : "Escribe sobre ti"
 
     const buildBio = () => {
-        console.log("New bio", bio)
         submitBio(bio)
     }
 

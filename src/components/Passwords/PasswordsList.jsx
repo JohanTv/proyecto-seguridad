@@ -27,6 +27,7 @@ export function PasswordsList() {
         validate(masterPassword, user.password, user.salt)
         .then((result) => {
             if(result){
+                console.log("pass guardada es", pass)
                 encryptPassword(masterPassword, user.salt, pass.password)
                 .then((encrypted) => {
                     pass.password = encrypted.cipherText
@@ -52,7 +53,6 @@ export function PasswordsList() {
         })
     }
     if(loading){
-        console.log(user)
         setLoading(false)   
         return null
     }

@@ -19,7 +19,6 @@ export function PasswordInfo({password}) {
             validate(masterPassword, user.password, user.salt)
             .then((result) => {
                 if(result){
-                    console.log(masterPassword, user.salt, password.password, password.salt)
                     decryptPassword(masterPassword, user.salt, password.password, password.salt)
                     .then((decrypted) => {
                         passDiv.current.innerHTML += `${decrypted}`
