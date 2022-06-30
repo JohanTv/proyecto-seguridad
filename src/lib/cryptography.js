@@ -1,5 +1,6 @@
-const strongPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
-const mediumPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,})) | ~((?=.*^\d{3,}.*))/;
+const strongPassword = /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])(?=.{8,})/
+const mediumPassword = /((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.{8,}))/;
+const consecutiveDigits = /(?=.*012|123|234|345|456|567|678|789)/
 
 export async function createAuth(masterPassword){
     const userSalt = crypto.getRandomValues(new Uint8Array(16));
@@ -55,9 +56,9 @@ export async function decryptPassword(masterPassword, salt, password, saltIv){
     return dec.decode(decrypted);
 }
 
-export function getSafeScore(score, levels){
-    if(strongPassword.test(score)) return levels[0];
-    if(mediumPassword.test(score)) return levels[1];
+export function getSafeScore(password, levels){
+    if(strongPassword.test(password) && !consecutiveDigits.test(password)) return levels[0];
+    if(mediumPassword.test(password) && !consecutiveDigits.test(password)) return levels[1];
     return levels[2];
 }
 

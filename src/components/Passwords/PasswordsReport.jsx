@@ -44,9 +44,6 @@ export function PasswordsReport() {
             <h1>Passwords Report</h1>
             <NavLink to="/app" style={({ isActive }) => isActive ? {color: 'red'} : {color: 'blue'}} activeclassname="active">Home</NavLink>
             {content}
-            {/* { passwords && passwords.map((pass, index) => (
-                pass.passName
-            ))} */}
         </div>
     )
 }
