@@ -8,10 +8,20 @@
     border-radius: 30px;
     height: 60vh;
     padding:10px;
+    text-align: center;
 }
 
 .securityContainer .title{
     font-size: 30px;
+}
+
+.passListSecurity{
+    padding: 10px;
+}
+
+.passListSecurity div{
+    font-size: 20px;
+    padding-top: 10px;
 }
 
 #Alto{
