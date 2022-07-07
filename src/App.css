@@ -2,7 +2,7 @@
 @import "./styles/header.css";
 @import "./styles/passIndex.css";
 @import "./styles/securityReport.css";
-@import './landing/css/style.css';
+/* @import './landing/css/style.css'; */
 
 body{
   background-color: #D3D3DA;

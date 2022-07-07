@@ -1,5 +1,7 @@
 import React, { useContext, Fragment } from 'react'
 import { currentUser } from '../contexts/UsersContext'
+import styles from '../landing/css/style.css';
+
 
 export function LandingPage() {
     const currUser = useContext(currentUser)
@@ -55,7 +57,7 @@ export function LandingPage() {
 	                        <p className="hero-paragraph is-revealing">No more untrusty servers, all the information is stored in your browser's local storage and only accesible by you!</p>
                             <div className="hero-form field field-grouped is-revealing">
 	                            <div className="control">
-	                                <a className="button button-primary button-block" href="#">Go to App</a>
+	                                <a className="button button-primary button-block" href="/app">Go to App</a>
 	                            </div>
 	                        </div>
 						</div>
