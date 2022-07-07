@@ -21,9 +21,9 @@ export function NewPassword({addPass}) {
     };
 
     const checkPass = () => {
-        const pass = password.current.value; // JOHAN defnir nivel de seguridad correcto
+        const pass = password.current.value;
         if(pass && pass.length > 0){
-            setGrade(`Password's safety level: ${pass}`)
+            setGrade(`Password's safety level: ${getSafeScore(pass, levels)}`)
         }
         else{
             setGrade()
@@ -31,15 +31,15 @@ export function NewPassword({addPass}) {
     }
 
     const generatePass = () => {
-        const pass = password.current.value; // JOHAN defnir nivel de seguridad correcto
+        const pass = password.current.value; 
         if(pass && pass.length > 0){
             if (!window.confirm("Esta acción reemplazará la contraseña que tiene actualmente, está seguro que quiere continuar?")) {
                 return;
             }
         }
-        alert('Contraseña generada');
         password.current.value = generateRandomPassword(10)
         checkPass()
+        alert('Contraseña generada');
     }
 
     return (
