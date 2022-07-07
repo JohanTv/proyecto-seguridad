@@ -1,6 +1,5 @@
 import React, { useContext, Fragment } from 'react'
 import { currentUser } from '../contexts/UsersContext'
-import styles from '../landing/css/style.css';
 
 
 export function LandingPage() {

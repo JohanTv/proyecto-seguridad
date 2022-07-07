@@ -9,12 +9,12 @@ import { PasswordsReport } from './components/Passwords/PasswordsReport'
 import { LandingPage } from './views/LandingPage'
 import { currentUser, userList } from './contexts/UsersContext'
 import { USER, USERS } from './env/localStorageVars'
-
-
 export function Router() {
     const [usuarios, setUsuarios] = useState(null)
     const [user, setUser] = useState(null);
-
+    if(window.location.href === 'http://localhost:3000/') {
+        require('./landing/css/style.css');
+    }
     useEffect(() => {
         const storedUsuarios = JSON.parse(localStorage.getItem(USERS))
         const storedUser = JSON.parse(localStorage.getItem(USER))
